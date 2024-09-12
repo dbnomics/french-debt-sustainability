@@ -1,7 +1,7 @@
 [project]
 name = "french-debt-sustainability"
 version = "0.1.0"
-description = "Add your description here"
+description = "French Finance sustainability with DBnomics Data"
 authors = [
     { name = "Juliette.Bornier", email = "juliette.bornier.3110@gmail.com" }
 ]
