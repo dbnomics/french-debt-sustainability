@@ -244,7 +244,7 @@ def main() -> None:
         )
 
         st.markdown("---")
-        st.write("[Source Code](https://github.com/dbnomics/europe-convergence)")
+        st.write("[Source Code](https://github.com/dbnomics/french-debt-sustainability)")
         st.write("[DBnomics](https://db.nomics.world")
 
 
