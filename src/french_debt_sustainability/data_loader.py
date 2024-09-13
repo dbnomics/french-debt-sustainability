@@ -63,7 +63,7 @@ def download_gov_expenditure():
     gov_expend = fetch_series("Eurostat/gov_10a_main/A.MIO_EUR.S13.TE.FR")
     return gov_expend
 
-#Long Term Interest Rate
+#Long Term Interest Rate need to compare to GDP growth rate 
 
 def download_lng_rate():
     lng_rate = fetch_series([
@@ -71,6 +71,13 @@ def download_lng_rate():
         "Eurostat/ei_mfir_m/M.NSA.NAP.MF-LTGBY-RT.EA"
         ])
     return lng_rate
+def download_int_rate(): 
+    int_rate = fetch_series("Eurostat/irt_lt_mcby_a/A.MCBY.FR")
+    return int_rate
+
+def download_growth_rate():
+    growth_rate = fetch_series("OECD/MEI/FRA.NAEXKP01.GYSA.A")
+    return growth_rate
     
 def download_hh_data():
     hh_df = fetch_series(
@@ -80,4 +87,6 @@ def download_hh_data():
         ]
     )
     return hh_df 
+
+
 

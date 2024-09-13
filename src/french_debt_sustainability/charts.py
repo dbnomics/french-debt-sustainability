@@ -31,7 +31,7 @@ def plot_debt_percent(maa_debt_percent):
 
     fig.update_layout(
     height=650, 
-    xaxis_title="Year",
+    xaxis_title="Years",
     yaxis_title="General Government Debt (% of GDP)",
     )
 
@@ -67,7 +67,7 @@ def plot_debt(maa_debt):
         )
     fig.update_layout(
     height=650, 
-    xaxis_title="Year",
+    xaxis_title="Years",
     yaxis_title="General Government Debt)",
     )
     return fig
@@ -206,7 +206,10 @@ def plot_expend_revenue(gov_rev, gov_expend):
            line= dict(color = "darkblue")
         )
     )
-
+    fig.update_layout(
+        xaxis_title = "Years",
+        yaxis_title = "The amount in thousands of millions"
+    )
     return fig
 
 def plot_chart_exp_rev(gov_rev, gov_expend):
@@ -223,7 +226,7 @@ def plot_chart_exp_rev(gov_rev, gov_expend):
             x= df_rev["original_period"],
             y= df_rev["revenue"],
             marker_color = "limegreen",
-            name= "Revenue"
+            name= "Revenue "
         )
     )
     fig.add_trace(
@@ -233,6 +236,11 @@ def plot_chart_exp_rev(gov_rev, gov_expend):
             marker_color = "darkblue",
             name= "Expenditure"
         )
+    )
+
+    fig.update_layout(
+        xaxis_title = "Years",
+        yaxis_title = "The amount in thousands of millions"
     )
     return fig 
 
@@ -250,7 +258,7 @@ def plot_lng_rate(lng_rate):
 
     fig.update_layout(
     height = 650,
-    xaxis_title = "Year",
+    xaxis_title = "Years",
     yaxis_title = "Long Term Interest Rate (%)"
     )
     
@@ -285,8 +293,76 @@ def plot_households_data(hh_df):
             ticktext =list(labels.values())
         ),
         xaxis_title= "",
-        yaxis_title = "",
+        yaxis_title = "The amount in % of disposable income",
         showlegend=False,
         height = 650
     )
+    return fig 
+
+def plot_int_rate_vs_growth_rate(int_rate, growth_rate):
+    df1= int_rate[["original_period", "series_name","original_value"]].rename(
+    columns={
+        "original_value" : "bond yields"
+    }
+    )
+
+    df2 = growth_rate[["original_period", "series_name","original_value"]].rename(
+        columns={
+            "original_value" : "economic growth rate"
+        }
+    )
+
+    df = pd.merge(df1, df2, on= "original_period")
+    df["Gap"] = df["bond yields"] - df["economic growth rate"]
+
+    # Créer une figure avec deux courbes : une pour les valeurs positives et une pour les négatives
+    fig = go.Figure()
+
+    # Courbe pour les valeurs positives (couleur par défaut ou personnalisée)
+    fig.add_trace(
+        go.Line(
+            x=df["original_period"],
+            y=df["Gap"],
+            mode='lines',
+            line=dict(color='orange'),  # Couleur bleue pour les valeurs positives
+            name='Gap'
+        )
+    )
+
+# Ajouter le titre
+    fig.update_layout(
+        title="Difference between Interest Rate and Economic Growth Rate", 
+        xaxis_title = "Years", 
+        yaxis_title = "Difference in percentage point"
+    )
+
+    return fig
+
+def plot_int_rate_and_growth_rate(int_rate,growth_rate):
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Line(
+            x = int_rate["original_period"],
+            y = int_rate["original_value"], 
+            line = dict(color = "orange"), 
+            name = "Long term government bond yields"
+        )
+    )
+
+    fig.add_trace(
+        go.Line(
+            x = growth_rate["original_period"], 
+            y = growth_rate["original_value"], 
+            line = dict(color = "limegreen"), 
+            name = "Economics Growth rate"
+        )
+    )
+    fig.update_layout(
+        xaxis_title = "Years",
+        yaxis_title = "Rates (%)",
+        title = "Comparison of Long Term Government Bond Yields and Economic Growth Rate",
+        height = 650
+    )
+
     return fig 
