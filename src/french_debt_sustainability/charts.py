@@ -46,7 +46,7 @@ def plot_debt_percent(maa_debt_percent):
 
 def plot_debt(maa_debt):
     maa_debt["original_period"] = pd.to_datetime(maa_debt["original_period"]).dt.strftime("%Y-%m")
-    dfi = maa_debt[['original_period', 'original_value']]
+    dfi = maa_debt[["original_period", 'original_value']]
     dfi["original_period"] = pd.to_datetime(dfi["original_period"]).dt.strftime("%Y-%m")
     start = 0
     obs = len(dfi)
@@ -59,7 +59,7 @@ def plot_debt(maa_debt):
         
     
     fig = px.line(
-            dfi,
+            maa_debt,
             x='original_period',
             y='original_value',
             title="French General Government Debt",
